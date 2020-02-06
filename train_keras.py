@@ -5,28 +5,27 @@ from model.config import Config
 from keras.models import load_model
 
 
-
 def main():
     # create instance of config
     config = Config()
 
-    #build model
-    model = BLSTMCRF(config) #Word_BLSTM(config)
-    #model = Word_BLSTM(config)
+    # build model
+    model = BLSTMCRF(config)  # Word_BLSTM(config)
+    # model = Word_BLSTM(config)
     model.build()
-    model.compile(optimizer=model.get_optimizer(), loss=model.get_loss()) #, metrics=['acc']
+    model.compile(optimizer=model.get_optimizer(), loss=model.get_loss())  # , metrics=['acc']
 
-    #model.summary()
+    # model.summary()
     # Loading weights
-    #model.load_weights('./saves/test20.h5')
-
+    # model.load_weights('./saves/test20.h5')
 
     # create datasets
-    dev = CoNLLDataset(config.filename_train, config.processing_word, #filename_dev
-                         config.processing_tag, config.max_iter)
+    dev = CoNLLDataset(config.filename_train, config.processing_word,  # filename_dev
+                       config.processing_tag, config.max_iter)
     train = CoNLLDataset(config.filename_train, config.processing_word,
                          config.processing_tag, config.max_iter)
-
+    print(train[0])
+    print(next(train))
     model.summary()
     # train model
     model.train(train, dev)
@@ -39,6 +38,7 @@ def main():
     # words = words.split(" ")
     # pred = model.predict_words(words)
     # print(pred)
+
 
 if __name__ == "__main__":
     main()
